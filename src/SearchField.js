@@ -1,54 +1,28 @@
 import logo from './logo.svg';
 import * as React from 'react';
 import * as DOM from 'react-dom';
+import GifCard from './GifCard.js';
+import { useState } from 'react';
 
-export default class SearchField extends React.Component {
+function SearchField(props){
 
-    constructor(){
-        super();
-        this.state = {
-            textInput: "",
-            gifInfo: null
-        }
-    }
+    const [input, setInput] = useState("");
 
-    updateValue(e){
-        this.setState({textInput: e.target.value});
-
+    const updateInput = (e) => {
         if(e.key === 'Enter'){
-            const finalInput = this.state.textInput;
-            console.log("Entered Value: " + finalInput);
-            this.fetchDataFromAPI(finalInput);
+            setInput(e.target.value);
+            props.parentCallback(e.target.value);
         }
-    }
+    };
 
-    async fetchDataFromAPI(input){
-        const path = "http://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=SnHGtiLWPxHxIUqxzbkjYco0B1oKeeNH";
-
-
-        try {
-            const response = await fetch(path);
-            const data = await response.json();
-            this.setState({gifInfo: data});
-            console.log(this.state.gifInfo);      
-          } catch(e){
-            console.log("Invalid Input")
-          }
-    }
-
-    
-
-
-
-    render(){
-        return (
-            <div className="search">
-                <label htmlFor={"gif-input"}> Search Up A Gif: </label>
-                <input type={"text"} name={"gif-input"} onKeyUp={(e) => this.updateValue(e)}/>
-                
-            </div>
-        )
-    }
-
-    
+    return (
+        <div className="search">
+            <label htmlFor={"gif-input"}> Search Up A Gif: </label>
+            <input type={"text"} name={"gif-input"} onKeyUp={(e) => updateInput(e)}/>
+        </div>
+    );
 }
+
+
+
+export default SearchField;
