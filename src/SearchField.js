@@ -6,17 +6,10 @@ import { useState } from 'react';
 
 function SearchField(props){
 
-    const [input, setInput] = useState("");
+    const [input, setInput] = useState("")
+    const [searchTerm, setSearchTerm] = useState("")
     const [gifs, setGifs] = useState(null)
     let random = false
-    let error = false
-
-    const updateInput = (e) => {
-        if(e.key === 'Enter'){
-            setInput(e.target.value);
-            props.parentCallback(e.target.value);
-        }
-    };
 
     const handleEnter = (e) => {
         random = false
@@ -43,22 +36,31 @@ function SearchField(props){
         let path
         path = random ? `http://api.giphy.com/v1/gifs/random?api_key=${apiKey}` :
                         `http://api.giphy.com/v1/gifs/search?q=${input}&api_key=${apiKey}`
-        await fetch(path)
-        .then((res) => res.json())
-        .then((obj) => {
-            error = false
+                        console.log(path)
+        try {
+            const res = await fetch(path)
+            const obj = await res.json()
             if(random){
                 //Creates array if API call returns singular object
+                setSearchTerm("Here's a random GIF!")
                 let arr = []
                 arr.push(obj.data)
                 setGifs(arr)
+            } else if(obj.data.length === 0){
+                setSearchTerm("Sorry, we couldn't find that")
+                let arr = []
+                let errorGif = {id : "UHAYP0FxJOmFBuOiC2"}
+                arr.push(errorGif)
+                setGifs(arr)
             } else {
+                setSearchTerm(`Searching up... ${input}`)
+                console.log(obj)
                 setGifs(obj.data)
             }
-        })
-        .catch((err) => {
-            error = true
-        })
+        }
+        catch(err){
+            setSearchTerm("Sorry, we couldn't find that")
+        }
     }
 
     return (
@@ -74,16 +76,12 @@ function SearchField(props){
             </form>
 
 
-            {/* {gifs && <h2>Searching up... {input}</h2>} */}
+            {gifs && <h2>{searchTerm}</h2>}
             <div className='search-results'>
-                {error ? <GifCard key = {1}
-                                  id = {"UHAYP0FxJOmFBuOiC2"}/> : <></>}
-                {console.log(gifs)}
                 {gifs && gifs.map((gif, i) => {
-                    console.log(gif.id)
                     return (
                         <GifCard key = {i}
-                                id = {gif.id}/>
+                                 id = {gif.id}/>
                     )
                 })}
             </div>

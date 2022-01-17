@@ -1,3 +1,5 @@
+
+
 img {
     margin:10px;
     border: 2px solid black;
@@ -38,4 +40,18 @@ img {
 
 .random-button {
     margin-left: 25px;
+}
+
+footer {
+    color : white;
+    background-color: black;
+    height: fit-content;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+}
+
+footer > small {
+    margin: 0 auto;
 }
