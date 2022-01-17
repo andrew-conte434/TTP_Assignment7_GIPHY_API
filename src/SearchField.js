@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import * as React from 'react';
-import * as DOM from 'react-dom';
 import GifCard from './GifCard.js';
 import { useState } from 'react';
 
@@ -34,8 +32,8 @@ function SearchField(props){
     const fetchData = async (e) => {
         const apiKey = process.env.REACT_APP_GIPHY_API_KEY
         let path
-        path = random ? `http://api.giphy.com/v1/gifs/random?api_key=${apiKey}` :
-                        `http://api.giphy.com/v1/gifs/search?q=${input}&api_key=${apiKey}`
+        path = random ? `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}` :
+                        `https://api.giphy.com/v1/gifs/search?q=${input}&api_key=${apiKey}`
                         console.log(path)
         try {
             const res = await fetch(path)

@@ -1,9 +1,4 @@
-import logo from './logo.svg';
 import * as React from 'react';
-import * as DOM from 'react-dom';
-import SearchField from './SearchField.js';
-import { useEffect } from 'react';
-
 
 function GifCard(props){
     return <img src={`https://i.giphy.com/media/${props.id}/giphy.gif`}/>

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import SearchField from './SearchField.js';
 import GifCard from './GifCard.js';
@@ -9,7 +8,7 @@ function App() {
   
   useEffect(() => {
     const apiKey = process.env.REACT_APP_GIPHY_API_KEY
-    fetch(`http://api.giphy.com/v1/gifs/trending?api_key=${apiKey}`)
+    fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}`)
     .then((res) => res.json())
     .then((obj) => {
       setGifs(obj.data)
