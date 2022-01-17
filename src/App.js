@@ -5,68 +5,71 @@ import GifCard from './GifCard.js';
 import {useEffect, useState} from 'react'
 
 function App() {
-  const [input, setInput] = useState("Trending");
   const [gifs, setGifs] = useState(null);
-  const [checkData, setCheckData] = useState(false);
   
-
   useEffect(() => {
-    fetchDataFromAPI(input, [gifs, setGifs]);
-    setCheckData(true);
+    const apiKey = process.env.REACT_APP_GIPHY_API_KEY
+    fetch(`http://api.giphy.com/v1/gifs/trending?api_key=${apiKey}`)
+    .then((res) => res.json())
+    .then((obj) => {
+      setGifs(obj.data)
+    })
+    .catch((err) => {
+      alert("No results found")
+    })
   }, [])
 
-  const handleCallback = (searchInput) => {
-    setInput(searchInput);
-    console.log(searchInput);
-    setCheckData(false);
-  }
+  // if(input !== "" && !checkData){
+  //   fetchDataFromAPI(input, [gifs, setGifs]);
+  //   setCheckData(true);
+  // }
 
-  if(input !== "" && !checkData){
-    fetchDataFromAPI(input, [gifs, setGifs]);
-    setCheckData(true);
-  }
-
-  const getRating = (e) => {
-    console.log(e.value);
-  }
-  
-
-  
+  // const getRating = (e) => {
+  //   console.log(e.value);
+  // }
   return (
     <div className="display">
-    <div className="inputs">
-      <SearchField parentCallback = {handleCallback}/>
-    </div>
-
-    <h1>Searching Up...{input}</h1>
-
-    <div className="displayGifs">
-      <GifCard data = {gifs} didUserEnterInfo = {checkData}/>
-    </div>
+      <h1 className="header">Top GIFs right now!</h1>
+      <div className="trending">
+        {gifs && gifs.map((gif, i) => {
+            return (
+              <GifCard key = {gif.id}
+                      id = {gif.id}
+                      url = {gif.url}
+                      className="trending"/>
+            )
+        })}
+      </div>
+      <div className="inputs">
+          <SearchField />
+      </div>
+      <footer>
+       <small> © 2022 Andrew Conte, Yahia Elhag, Halid Adechinan </small>
+      </footer>
     </div>
     
   );
 }
 
-async function fetchDataFromAPI(input, [gifs, setGifs]){
-  let path = "";
-  if(input === "Trending"){
-    path = "http://api.giphy.com/v1/gifs/trending?api_key=SnHGtiLWPxHxIUqxzbkjYco0B1oKeeNH&limit=15";
-  } else {
-    path = "http://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=SnHGtiLWPxHxIUqxzbkjYco0B1oKeeNH&limit=15";
-  }
+// async function fetchDataFromAPI(input, [gifs, setGifs]){
+//   const apiKey = process.env.REACT_APP_GIPHY_API_KEY
+//   let path = "";
+//   if(input === "Trending"){
+//     path = `http://api.giphy.com/v1/gifs/trending?api_key=${apiKey}`
+//   } else if(input === "random"){
+//     path = `http://api.giphy.com/v1/gifs/random?api_key=${apiKey}`
+//    } else {
+//      path = `http://api.giphy.com/v1/gifs/search?q=${input}&api_key=${apiKey}`
+//     }
+  
 
-  try {
-      const response = await fetch(path);
-      const data = await response.json();
-      setGifs(data);
-    } catch(e){
-      console.log("Invalid Input")
-    }
+//   try {
+//       const response = await fetch(path);
+//       const data = await response.json();
+//       setGifs(data.data);
+//     } catch(e){
+//       console.log("Invalid Input")
+//     }
 
-}
-
-
-
-
+// }
 export default App;
