@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/%20TTP_Assignment7_GIPHY_API/static/css/main.cf220572.css",
-    "main.js": "/%20TTP_Assignment7_GIPHY_API/static/js/main.767539f1.js",
+    "main.css": "/%20TTP_Assignment7_GIPHY_API/static/css/main.a933363d.css",
+    "main.js": "/%20TTP_Assignment7_GIPHY_API/static/js/main.149c4c1e.js",
     "static/js/787.b360a11e.chunk.js": "/%20TTP_Assignment7_GIPHY_API/static/js/787.b360a11e.chunk.js",
     "index.html": "/%20TTP_Assignment7_GIPHY_API/index.html",
-    "main.cf220572.css.map": "/%20TTP_Assignment7_GIPHY_API/static/css/main.cf220572.css.map",
-    "main.767539f1.js.map": "/%20TTP_Assignment7_GIPHY_API/static/js/main.767539f1.js.map",
+    "main.a933363d.css.map": "/%20TTP_Assignment7_GIPHY_API/static/css/main.a933363d.css.map",
+    "main.149c4c1e.js.map": "/%20TTP_Assignment7_GIPHY_API/static/js/main.149c4c1e.js.map",
     "787.b360a11e.chunk.js.map": "/%20TTP_Assignment7_GIPHY_API/static/js/787.b360a11e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cf220572.css",
-    "static/js/main.767539f1.js"
+    "static/css/main.a933363d.css",
+    "static/js/main.149c4c1e.js"
   ]
 }
