@@ -7,7 +7,11 @@ function SearchField(props){
     const [input, setInput] = useState("")
     const [searchTerm, setSearchTerm] = useState("")
     const [gifs, setGifs] = useState(null)
+    const [ratingFilter, setRatingFilter] = useState("g");
+
     let random = false
+
+    const changeFilter = (e) => {setRatingFilter(e.target.value)};
 
     const handleEnter = (e) => {
         random = false
@@ -51,9 +55,27 @@ function SearchField(props){
                 arr.push(errorGif)
                 setGifs(arr)
             } else {
+                // setSearchTerm(`Searching up... ${input}`)
+                // console.log(obj)
+                // setGifs(obj.data)
+                // console.log(obj.data);
+                
                 setSearchTerm(`Searching up... ${input}`)
-                console.log(obj)
-                setGifs(obj.data)
+                let arr = [];
+
+                for(let i = 0; i < obj.data.length; i++){
+                    if(obj.data[i].rating == ratingFilter){
+                        arr.push(obj.data[i]);
+                    }
+                }
+
+                if(arr.length == 0){
+                    setSearchTerm("Sorry, we couldn't find that");
+                    let errorGif = {id : "UHAYP0FxJOmFBuOiC2"}
+                    arr.push(errorGif);
+                }
+                
+                setGifs(arr);
             }
         }
         catch(err){
@@ -71,6 +93,13 @@ function SearchField(props){
                     onKeyDown={handleEnter}/>
                 <input type={"button"} value={"Search"} onClick={handleSubmit}/>
                 <button className="random-button" onClick={handleRandom}>Get a random GIF!</button>
+                <label htmlFor={"rating"}> &nbsp;&nbsp;&nbsp;Filter Through Ratings: </label>
+                <select name="rating" id="rating" onChange={(e) => changeFilter(e)}>
+                    <option value="g">G</option>
+                    <option value="pg">PG</option>
+                    <option value="pg-13">PG-13</option>
+                    <option value="r">R</option>
+                </select>
             </form>
 
 
@@ -79,7 +108,7 @@ function SearchField(props){
                 {gifs && gifs.map((gif, i) => {
                     return (
                         <GifCard key = {i}
-                                 id = {gif.id}/>
+                                 id = {gif.id} />
                     )
                 })}
             </div>
