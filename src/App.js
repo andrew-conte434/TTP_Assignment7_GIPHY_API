@@ -35,6 +35,7 @@ function App() {
               <GifCard key = {gif.id}
                       id = {gif.id}
                       url = {gif.url}
+                      rating = {gif.rating}
                       className="trending"/>
             )
         })}
